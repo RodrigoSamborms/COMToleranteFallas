@@ -1,0 +1,108 @@
+SOLUCIÓN PARA PROBLEMAS DE CREDENCIALES EN GIT CON VISUAL STUDIO CODE
+=====================================================================
+
+PROBLEMA ORIGINAL:
+Error: "Permission to Rodrigo denied to RodrigoTorres"
+- Git estaba usando credenciales incorrectas
+- Necesitaba cambiar de "RodrigoTorres" a "RodrigoSamborms"
+
+SOLUCIÓN PASO A PASO:
+====================
+
+1. VERIFICAR CONFIGURACIÓN ACTUAL DE GIT
+   Comando: git config --list | findstr user
+   - Esto muestra qué usuario y email están configurados actualmente
+
+2. ACTUALIZAR CONFIGURACIÓN DE GIT
+   Comandos:
+   git config --global user.name "RodrigoSamborms"
+   git config --global user.email "tu-email-correcto@ejemplo.com"
+   
+   IMPORTANTE: Reemplaza "tu-email-correcto@ejemplo.com" con el email 
+   asociado a tu cuenta de GitHub RodrigoSamborms
+
+3. ELIMINAR CREDENCIALES ALMACENADAS EN WINDOWS
+   Paso 3.1: Buscar credenciales almacenadas
+   Comando: cmdkey /list | findstr git
+   
+   Paso 3.2: Eliminar credenciales incorrectas
+   Comando: cmdkey /delete:LegacyGeneric:target=git:https://github.com
+   
+   Resultado esperado: "CMDKEY: credencial eliminada correctamente."
+
+4. CONFIGURAR ADMINISTRADOR DE CREDENCIALES
+   Comando: git config --global credential.helper manager
+   - Esto configura Git para usar el Administrador de Credenciales de Windows
+
+5. PROBAR LA CONEXIÓN
+   Comando: git push -u origin main
+   - Git debería solicitar autenticación en el navegador
+   - Autentica con la cuenta correcta (RodrigoSamborms)
+   - Si es exitoso, verás: "branch 'main' set up to track 'origin/main'"
+
+MÉTODOS PARA ACTUALIZAR REPOSITORIO EN VS CODE:
+==============================================
+
+MÉTODO 1: INTERFAZ GRÁFICA DE VS CODE
+- Abrir panel de Control de Código Fuente (Ctrl+Shift+G)
+- Hacer clic en el menú "..." 
+- Seleccionar "Pull" para descargar cambios remotos
+- Seleccionar "Push" para subir tus cambios locales
+
+MÉTODO 2: PALETA DE COMANDOS
+- Presionar Ctrl+Shift+P
+- Escribir "Git: Pull" para descargar cambios
+- Escribir "Git: Push" para subir cambios
+- Escribir "Git: Sync" para sincronizar (pull + push)
+
+MÉTODO 3: BARRA DE ESTADO
+- Mirar la barra inferior de VS Code
+- Hacer clic en el ícono de sincronización (↕️) con números
+- Esto sincroniza automáticamente el repositorio
+
+MÉTODO 4: COMANDOS EN TERMINAL
+- Presionar Ctrl+` para abrir terminal integrada
+- Comandos básicos:
+  * git pull    - descargar y fusionar cambios remotos
+  * git push    - subir commits locales
+  * git status  - verificar estado actual
+  * git fetch   - descargar cambios sin fusionar
+
+FLUJO DE TRABAJO RECOMENDADO:
+============================
+1. Antes de trabajar: git pull (descargar últimos cambios)
+2. Hacer cambios y commits
+3. Subir cambios: git push (compartir con otros)
+
+CONFIGURACIÓN ADICIONAL RECOMENDADA:
+===================================
+- Habilitar fetch automático:
+  * Ir a Archivo → Preferencias → Configuración
+  * Buscar "git.autofetch"
+  * Activar esta opción para descargar cambios automáticamente
+
+VERIFICACIÓN FINAL:
+==================
+Después de completar estos pasos, tu repositorio debería:
+✓ Usar las credenciales correctas (RodrigoSamborms)
+✓ Permitir push/pull sin errores de permisos
+✓ Funcionar correctamente con la integración Git de VS Code
+✓ Mantener credenciales seguras en Windows Credential Manager
+
+COMANDOS DE EMERGENCIA (si algo sale mal):
+=========================================
+- Ver configuración actual: git config --list
+- Verificar repositorio remoto: git remote -v
+- Ver estado del repositorio: git status
+- Ver historial de commits: git log --oneline
+
+NOTAS IMPORTANTES:
+=================
+- Siempre usar el email asociado a tu cuenta de GitHub
+- Las credenciales se almacenan de forma segura en Windows
+- VS Code usará automáticamente estas credenciales configuradas
+- Si cambias de cuenta GitHub, repite este proceso
+
+Fecha de creación: 24 de septiembre de 2025
+Repositorio: COMToleranteFallas
+Usuario: RodrigoSamborms
