@@ -1,0 +1,1 @@
+Este repositorio contiene las practicas requeridas para la asignatura Computación Tolerante a fallas
